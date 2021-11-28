@@ -21,9 +21,9 @@
       </TR>
       <xsl:for-each select="output/table/palindrome">
       <TR>
-          <TD scope="row"><xsl:value-of select="output/table/palindrome/index"/></TD>
-          <TD scope="row"><xsl:value-of select="output/table/palindrome/number"/></TD>
-          <TD scope="row"><xsl:value-of select="output/table/palindrome/square"/></TD>
+          <TD scope="row"><xsl:value-of select="index"/></TD>
+          <TD scope="row"><xsl:value-of select="number"/></TD>
+          <TD scope="row"><xsl:value-of select="square"/></TD>
       </TR>
       </xsl:for-each>
   </TABLE><BR/>
