@@ -1,0 +1,31 @@
+<h1>Palindromes</h1>
+<p>     Определить количество неотрицательных целых чисел ≤ n (n
+        вводится с клавиатуры), квадрат которых является палиндромом. Например:
+        26^2 = 676.
+</p>
+
+<%= form_tag url_for(controller: :proxy, action: :view), method: 'get' do %> 
+
+    <%= label_tag :n, "Введите n: " %> 
+    <%= text_field_tag :n, '', id: 'input_number', required: true %> <br/><br/>        <%#(:n, default_value)%>
+
+    <fieldset class="form-group">
+      <legend>Выбор стороны рендеринга</legend>
+      <div class="form-check d-flex flex-column">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="side" value="server" id="server-side" checked>
+          Серверное XML + XSLT -> HTML
+        </label>  
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="side" value="client" id="client-side">
+          Отображение сырого XML на стороне браузера
+        </label>   
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="side" value="client-with-xslt" id="client-side-xslt">
+          Клиентское XML + XSLT -> HTML  
+        </label>    
+      </div>
+    </fieldset><br/>
+
+    <%= button_tag "Отправить", type: 'submit', name: nil, id: 'btn_commit', class: 'btn btn-primary' %>
+<% end %>
