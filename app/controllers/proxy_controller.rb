@@ -1,5 +1,5 @@
 require 'nokogiri'
-require 'open-uri'
+require 'http'
 
 # Контроллер запросов к api-приложению.
 class ProxyController < ApplicationController
@@ -12,7 +12,7 @@ class ProxyController < ApplicationController
   # Отсылает запрос другому приложению в зависимости от желания клиента.
   def view
     # Делаем запрос и получаем ответ от другого сервера в виде XML-документа
-    api_response = open(@url)
+    api_response = HTTP.get(@url).body
     
     # Если делать XML -> HTML на сервере.
     if @side == 'server'
@@ -28,7 +28,7 @@ class ProxyController < ApplicationController
 
   private
   # Куда шлем запрос.
-  BASE_API_URL           = 'http://localhost:3000/view.xml?'.freeze
+  BASE_API_URL           = 'http://localhost:3001/xml/view.xml?'.freeze
   # Откуда браузер должен брать XSLT. Это подставится к localhost:3001. Так грузятся файлы из public.
   XSLT_BROWSER_TRANSFORM = '/browser_transform.xslt'.freeze
   # Откуда берем XSLT для преобразования на стороне сервера.
@@ -46,8 +46,8 @@ class ProxyController < ApplicationController
   # Преобразование XSLT на сервере.
   def xslt_transform(data, transform: XSLT_SERVER_TRANSFORM)
     doc = Nokogiri::XML(data)
-    xslt = Nokogiri::XSLT(File.read(transfrom))
-    xslt.transfrom(doc)
+    xslt = Nokogiri::XSLT(File.read(transform))
+    xslt.transform(doc)
   end
 
   # Чтобы преобразование XSLT на клиенте работало, надо вставить ссылку на XSLT.
