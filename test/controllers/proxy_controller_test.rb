@@ -10,7 +10,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get view in xml' do
-    get "#{proxy_view_url}.xml+rss"
+    get "#{proxy_view_url}.xml"
     assert_response :success
     assert_equal 'application/xml', @response.media_type
   end
@@ -33,7 +33,7 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get incorrect input error' do
-    get "#{proxy_view_url}?n="
+    get "#{proxy_view_url}?n=zxc"
     response = @response.body.clone
 
     assert_includes response, '<error>Некорректный ввод. Используйте только цифры!</error>'
