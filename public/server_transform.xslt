@@ -4,15 +4,13 @@
 
 <xsl:template match="/">
 
-<xsl:if test="output/input">
-  <P>Вы ввели: <xsl:value-of select="output/input"/></P>
-</xsl:if>
 <xsl:choose>
 <xsl:when test="output/error">
   <P class="text-danger">Ошибка: <xsl:value-of select="output/error"/></P>
 </xsl:when>
 <xsl:otherwise>
-  <P>Ответ: <xsl:value-of select="output/result"/></P>
+  <P>Вы ввели: <xsl:value-of select="output/input"/><br/>
+     Ответ: <xsl:value-of select="output/result"/></P>
   <TABLE class="table table-striped">
       <TR>
           <TH scope="col">#</TH>
@@ -29,6 +27,5 @@
   </TABLE><BR/>
 </xsl:otherwise>
 </xsl:choose>
-
 </xsl:template>
 </xsl:stylesheet>

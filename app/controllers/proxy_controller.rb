@@ -13,14 +13,15 @@ class ProxyController < ApplicationController
   def view
     # Делаем запрос и получаем ответ от другого сервера в виде XML-документа
     api_response = HTTP.get(@url).body
-    
+
     # Если делать XML -> HTML на сервере.
     if @side == 'server'
       @result = xslt_transform(api_response).to_html
+      render 'view'
     # Если делать XML -> HTML на браузере.  
     elsif @side == 'client-with-xslt'
-      render xml: insert_browser_xslt(api_response).to_xml
-    # Если вообще ничего не делать.
+        render xml: insert_browser_xslt(api_response).to_xml
+    # Если сырой XML.
     else
       render xml: api_response
     end
