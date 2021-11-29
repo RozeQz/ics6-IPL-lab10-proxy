@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'nokogiri'
 require 'http'
 
@@ -15,12 +17,13 @@ class ProxyController < ApplicationController
     api_response = HTTP.get(@url).body
 
     # Если делать XML -> HTML на сервере.
-    if @side == 'server'
+    case @side
+    when 'server'
       @result = xslt_transform(api_response).to_html
       render 'view'
-    # Если делать XML -> HTML на браузере.  
-    elsif @side == 'client-with-xslt'
-        render xml: insert_browser_xslt(api_response).to_xml
+    # Если делать XML -> HTML на браузере.
+    when 'client-with-xslt'
+      render xml: insert_browser_xslt(api_response).to_xml
     # Если сырой XML.
     else
       render xml: api_response
@@ -28,10 +31,11 @@ class ProxyController < ApplicationController
   end
 
   private
+
   # Куда шлем запрос.
-  BASE_API_URL           = 'http://localhost:3001/xml/view.xml?'.freeze
+  BASE_API_URL           = 'http://localhost:3001/xml/view.xml?'
   # Откуда браузер должен брать XSLT. Это подставится к localhost:3001. Так грузятся файлы из public.
-  XSLT_BROWSER_TRANSFORM = '/browser_transform.xslt'.freeze
+  XSLT_BROWSER_TRANSFORM = '/browser_transform.xslt'
   # Откуда берем XSLT для преобразования на стороне сервера.
   XSLT_SERVER_TRANSFORM  = "#{Rails.root}/public/server_transform.xslt".freeze
 
@@ -54,7 +58,7 @@ class ProxyController < ApplicationController
   # Чтобы преобразование XSLT на клиенте работало, надо вставить ссылку на XSLT.
   def insert_browser_xslt(data, transform: XSLT_BROWSER_TRANSFORM)
     doc = Nokogiri::XML(data)
-    xslt = Nokogiri::XML::ProcessingInstruction.new(doc, 'xml-stylesheet', 'type="text/xsl" href="' + transform + '"')
+    xslt = Nokogiri::XML::ProcessingInstruction.new(doc, 'xml-stylesheet', "type=\"text/xsl\" href=\"#{transform}\"")
     doc.root.add_previous_sibling(xslt)
     doc
   end

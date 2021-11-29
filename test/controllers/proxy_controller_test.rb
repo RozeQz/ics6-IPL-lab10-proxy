@@ -1,7 +1,9 @@
-require "test_helper"
+# frozen_string_literal: true
+
+require 'test_helper'
 
 class ProxyControllerTest < ActionDispatch::IntegrationTest
-  test "should get input in html by default" do
+  test 'should get input in html by default' do
     get proxy_input_url
     assert_response :success
     assert_equal 'text/html', @response.media_type
