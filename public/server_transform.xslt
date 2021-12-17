@@ -9,7 +9,7 @@
   <P class="text-danger">Ошибка: <xsl:value-of select="output/error"/></P>
 </xsl:when>
 <xsl:otherwise>
-  <P>Вы ввели: <xsl:value-of select="output/input"/><br/>
+  <P>Вы ввели: <xsl:value-of select="output/input"/><BR/>
      Ответ: <xsl:value-of select="output/result"/></P>
   <TABLE class="table table-striped">
       <TR>

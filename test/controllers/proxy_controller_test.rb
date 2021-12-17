@@ -9,8 +9,8 @@ class ProxyControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'text/html', @response.media_type
   end
 
-  test 'should get view in xml' do
-    get "#{proxy_view_url}.xml"
+  test 'should get view in xml by default' do
+    get proxy_view_url
     assert_response :success
     assert_equal 'application/xml', @response.media_type
   end
